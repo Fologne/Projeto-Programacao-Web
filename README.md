@@ -4,6 +4,7 @@ Sistema web desenvolvido com Django para venda de cartas de card game.
 O projeto utiliza Django (Python) no back-end e HTML, CSS e JavaScript no front-end.
 
 🚀 Tecnologias Utilizadas
+
 🔹 Back-end
 
 Python 3.x
@@ -83,3 +84,4 @@ O sistema utiliza o sistema de autenticação padrão do Django:
 **[Gabriel Foloni](https://github.com/Fologne)**
 
 Projeto desenvolvido para fins acadêmicos.
+
