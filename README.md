@@ -10,7 +10,7 @@ Python 3.x
 
 Django
 
-SQLite3 (padrão, podendo ser substituído por PostgreSQL)
+SQLite3 
 
 Django ORM
 
@@ -22,7 +22,6 @@ CSS3
 
 JavaScript
 
-Bootstrap (opcional, se estiver usando)
 
 📌 Funcionalidades
 
