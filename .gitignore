@@ -1,4 +1,9 @@
 *
 !.gitignore
 !README.md
+!rhapsody/
 !rhapsody/**
+!categoria/
+!categoria/**
+!produto/
+!produto/**

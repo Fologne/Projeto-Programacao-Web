@@ -7,7 +7,7 @@ O projeto utiliza Django (Python) no back-end e HTML, CSS e JavaScript no front-
 
 🔹 Back-end
 
-Python 3.x
+Python 3.13.9
 
 Django
 
@@ -41,15 +41,6 @@ JavaScript
 ✅ Área administrativa (Django Admin)
 
 ✅ Painel para gerenciamento de produtos
-
-📂 Estrutura do Projeto
-
-```bash
-rhapsodycardgame/
-│
-├── .gitignore
-├── README.md
-```
 
 🎨 Front-end
 
