@@ -13,3 +13,6 @@ class Produto (models.Model):
     modificado_em = models.DateTimeField( auto_now=True)
     slug = models.SlugField(max_length=90, unique=True)
     categoria = models.ForeignKey (Categoria, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.nome
