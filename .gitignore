@@ -1,5 +1,6 @@
 *
 !.gitignore
+!manage.py
 !README.md
 !rhapsody/
 !rhapsody/**

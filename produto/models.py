@@ -1,5 +1,6 @@
 from django.db import models
 from categoria.models import Categoria
+from tipo.models import Tipo
 
 # Create your models here.
 class Produto (models.Model):
@@ -13,6 +14,7 @@ class Produto (models.Model):
     modificado_em = models.DateTimeField( auto_now=True)
     slug = models.SlugField(max_length=90, unique=True)
     categoria = models.ForeignKey (Categoria, on_delete=models.CASCADE)
+    tipo = models.ForeignKey (Tipo, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.nome
