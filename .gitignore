@@ -10,3 +10,7 @@
 !produto/**
 !tipo/
 !tipo/**
+!templates/
+!templates/**
+!docs/
+!docs/**
