@@ -1,0 +1,60 @@
+# Especificação de Caso de Uso
+
+## Informações Gerais
+
+| Campo | Descrição |
+|------|-----------|
+| **Nome do Caso de Uso** | Cadastro/alteração de usuário|
+| **Descrição** | O cliente pode cadastrar um usuário de comprador para ele |
+| **Ator Envolvido** | Cliente|
+
+---
+
+## Interação entre Ator e Sistema
+
+| Funcionário (Ator) | Sistema |
+|--------------------|---------|
+| O cliente seleciona para cadastrar um usuário| O sistema abre uma tela com os campos para o cadastro de usuário  |
+| O cliente seleciona para alterar seu usuário | O sistema abre uma tela com os campos que podem ser alterados |
+| O cliente seleciona para finalizar a alteração/cadastro do usuário | O sistema abre uma tela dizendo que a ação foi bem sucedida |
+
+---
+
+## Exceções
+- Nenhuma exceção definida
+
+---
+
+## Alternativas
+- Nenhuma alternativa definida
+
+---
+
+## Regras de Negócio
+- RN01 - Cada usuário deve possuir um código de identificação.
+- RN02 - Não pode existir dois cadastros com o mesmo CPF.
+- RN03 - Data de nascimento deve ser válida e o usuário cadastrado deve possuir mais de 18 anos.
+- RN04 - O telefone deve seguir o padrão DD999999999 ou DD99999999.
+- RN05 - O código deve ser selecionado pelo sistema seguindo uma sequência numérica.
+
+---
+
+## Requisitos de Interface com o Usuário
+- RI01 - O sistema deve exibir uma tela para selecionar se deseja cadastrar o usuário caso ele não esteja logado.
+- RI02 - O sistema deve exibir uma tela para selecionar se deseja alterar o usuário caso ele esteja logado.
+
+---
+
+# Dicionário de Dados
+
+| Nome do Campo | Descrição | Obrigatório | Tipo | Tamanho | Máscara | Valor Default | Regex |
+|---------------|-----------|-------------|------|---------|---------|--------------|-------|
+| Nome | Nome do usuário | Obrigatório | Texto | 120| | | ```^.{0,120}$```|
+| CPF  | CPF do usuário | Obrigatório | INT | 11 | | |```^\d{11}$``` |
+| Código | Código do usuário| Obrigatório| INT | 3 | | | ```^\d{3}$```|
+|Data | Data de nascimento do usuário | Obrigatório|Data |  | | | ```^(0[1-9]\|[12][0-9]\|3[01])\/(0[1-9]\|1[0-2])\/(19\|20)\d{2}$```|
+| CEP| CEP do usuário |Obrigatório| INT| 8 | | | ```^\d{8}$```|
+|Endereço | Endereço do usuário|Obrigatório |Texto | 120 | | | ```^.{0,120}$```|
+| Complemento|Complemento do endereço do usuário |Opcional | Texto |120  | | | ```^.{0,120}$```|
+| Telefone| Telefone do usuário|Obrigatório |INT | 11 | | | ```^\d{11}$```|
+| Email |Email do usuário |Obrigatório | Texto|120  | | | ```^(?=.{1,120}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$```|
