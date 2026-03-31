@@ -21,6 +21,7 @@ from rhapsody import views, settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.visualizarHome, name='visualizarHome')
+    path('', views.visualizarHome, name='visualizarHome'),
+    path('cadastro-produto', views.cadastroProdutos, name='cadastroProdutos'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas

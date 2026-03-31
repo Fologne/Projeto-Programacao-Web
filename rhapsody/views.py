@@ -8,3 +8,6 @@ def visualizarHome(request):
         'produtos':produtos
     }
     return render(request, 'index.html', context)
+
+def cadastroProdutos(request):
+    return render(request, 'cadastroProduto.html')
