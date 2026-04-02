@@ -38,8 +38,3 @@
 - RI01 - O sistema deve exibir uma tela para selecionar o produto pesquisando por nome.
 
 ---
-
-# Dicionário de Dados
-
-| Nome do Campo | Descrição | Obrigatório | Tipo | Tamanho | Máscara | Valor Default | Regex |
-|---------------|-----------|-------------|------|---------|---------|--------------|-------|
