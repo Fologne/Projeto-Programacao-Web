@@ -44,17 +44,3 @@
 - RI02 - O sistema deve exibir uma tela para selecionar se deseja alterar o usuário caso ele esteja logado.
 
 ---
-
-# Dicionário de Dados
-
-| Nome do Campo | Descrição | Obrigatório | Tipo | Tamanho | Máscara | Valor Default | Regex |
-|---------------|-----------|-------------|------|---------|---------|--------------|-------|
-| Nome | Nome do usuário | Obrigatório | Texto | 120| | | ```^.{0,120}$```|
-| CPF  | CPF do usuário | Obrigatório | INT | 11 | | |```^\d{11}$``` |
-| Código | Código do usuário| Obrigatório| INT | 3 | | | ```^\d{3}$```|
-|Data | Data de nascimento do usuário | Obrigatório|Data |  | | | ```^(0[1-9]\|[12][0-9]\|3[01])\/(0[1-9]\|1[0-2])\/(19\|20)\d{2}$```|
-| CEP| CEP do usuário |Obrigatório| INT| 8 | | | ```^\d{8}$```|
-|Endereço | Endereço do usuário|Obrigatório |Texto | 120 | | | ```^.{0,120}$```|
-| Complemento|Complemento do endereço do usuário |Opcional | Texto |120  | | | ```^.{0,120}$```|
-| Telefone| Telefone do usuário|Obrigatório |INT | 11 | | | ```^\d{11}$```|
-| Email |Email do usuário |Obrigatório | Texto|120  | | | ```^(?=.{1,120}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$```|
