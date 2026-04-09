@@ -4,7 +4,7 @@
 
 | Campo | Descrição |
 |------|-----------|
-| **Nome do Caso de Uso** | Cadastro de produto |
+| **Nome do Caso de Uso** | Cadastrar produto |
 | **Descrição** | O administrador pode cadastrar/alterar um produto |
 | **Ator Envolvido** | Administrador |
 
@@ -15,8 +15,9 @@
 | Funcionário (Ator) | Sistema |
 |--------------------|---------|
 | O administrador seleciona para cadastrar um novo produto | O sistema deve exibir uma tela para cadastro do produto |
-| O administrador preenche todos os campos e seleciona cadastrar| O sistema deve colocar o produto em seu banco de dados |
+| O administrador preenche todos os campos e seleciona cadastrar| O sistema salva o produto em seu banco de dados |
 | O administrador seleciona para alterar o produto| O sistema deve exibir uma tela para alterar campos pré-definidos |
+| O administrador preenche os campos e selecionar alterar| O sistema altera os dados do produto em seu banco de dados |
 
 ---
 
@@ -31,10 +32,9 @@
 ---
 
 ## Regras de Negócio
-- RN01 - Cada produto deve ter um id.
-- RN02 - Cada produto deve ter um preço e estoque.
-- RN03 - Os campos criado_em e modificado_em devem ser preenchidos automaticamente.
-- RN04 - O campo de qtd_vendida deve ser inicializado em 0 e aumentado conforme vendas.
+- RN01 - Cada produto deve ter um preço e estoque.
+- RN02 - Os campos criado_em e modificado_em devem ser preenchidos automaticamente.
+- RN03 - O campo de qtd_vendida deve ser inicializado em 0 e aumentado conforme vendas.
 
 ---
 

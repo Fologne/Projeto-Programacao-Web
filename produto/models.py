@@ -15,7 +15,7 @@ class Produto (models.Model):
     slug = models.SlugField(max_length=90, unique=True)
     categoria = models.ForeignKey (Categoria, on_delete=models.CASCADE)
     tipo = models.ForeignKey (Tipo, on_delete=models.CASCADE, null=True)
-    qtd_vendida = models.IntegerField(null=True)
+    qtd_vendida = models.IntegerField(default=0, null=True)
     
     def __str__(self):
         return self.nome

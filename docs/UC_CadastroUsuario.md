@@ -4,7 +4,7 @@
 
 | Campo | Descrição |
 |------|-----------|
-| **Nome do Caso de Uso** | Cadastro/alteração de usuário|
+| **Nome do Caso de Uso** | Cadastrar/alterar usuário|
 | **Descrição** | O cliente pode cadastrar um usuário de comprador para ele |
 | **Ator Envolvido** | Cliente|
 

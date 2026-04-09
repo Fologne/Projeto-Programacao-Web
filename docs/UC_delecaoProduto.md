@@ -4,7 +4,7 @@
 
 | Campo | Descrição |
 |------|-----------|
-| **Nome do Caso de Uso** |Deleção de produto |
+| **Nome do Caso de Uso** |Deletar produto |
 | **Descrição** | A deleção de produtos já cadastrados|
 | **Ator Envolvido** | Admnistrador|
 
