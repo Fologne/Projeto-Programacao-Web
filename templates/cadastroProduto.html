@@ -1,62 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" href="{% static 'imagens/favicon.ico' %}" type="image/x-icon">
-    <title>Cadastro de produtos da Rhapsody!</title>
-    <link rel="stylesheet" href="{% static 'css/styleCadastro.css' %}">
-</head>
-<body>
-<!-- NAVBAR -->
-<nav class="navbar">
-    <!-- ESQUERDA -->
-    <div class="nav-left">
-        <a href="/">
-            <img src="{% static 'imagens/logo.png' %}" class="logo">
-        </a>
-
-        <div class="dropdown">
-            <button class="dropbtn">Categorias</button>
-                <div class="dropdown-content">
-                    {% for cat in categorias %}
-                    <a href="/categoria/{{ cat.slug }}/">{{ cat.nome }}</a>
-                    {% endfor %}
-                </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dropbtn">Tipos</button>
-                <div class="dropdown-content">
-                    {% for t in tipos %}
-                    <a href="/tipos/{{ t.slug }}/">{{ t.nome }}</a>
-                    {% endfor %}
-                </div>
-        </div>
-    </div>
-
-    <!-- CENTRO (BUSCA) -->
-    <div class="nav-center">
-        <input type="text" placeholder="Buscar produtos...">
-        <button>Buscar</button>
-    </div>
-
-    <!-- DIREITA (LOGO) -->
-    <div class="nav-right">
-        
-    </div>
-</nav>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastro de Produtos - Rhapsody{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styleCadastro.css' %}">
+{% endblock %}
+{% block content %}
+<!-- POPUP -->
 {% if messages %}
     {% for message in messages %}
         <div class="popup">{{ message }}</div>
     {% endfor %}
 {% endif %}
-<!-- CONTEÚDO -->
- <div class="dropdown-content">
-    {% for cat in categorias %}
-        <a href="#">{{ cat.nome }}</a>
-    {% endfor %}
-</div>
 
 <div class="container">
     <h2>Cadastrar Produto</h2>
@@ -104,12 +58,5 @@
         <button type="submit">Cadastrar</button>
     </form>
 </div>
-
-<!-- RODAPÉ -->
-<footer class="footer">
-    <p>© 2026 Rhapsody Card Game</p>
-</footer>
-
 <script src="{% static 'js/cadastro.js' %}"></script>
-</body>
-</html>
+{% endblock %}

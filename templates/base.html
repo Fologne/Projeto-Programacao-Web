@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'imagens/favicon.ico' %}" type="image/x-icon">
+    <title>{% block title %}Rhapsody{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<div class="navbar">
+    <div class="nav-left">
+        <a href="/"><img src="{% static 'imagens/logo.png' %}" class="logo"></a>
+        <div class="dropdown">
+            <button class="dropbtn">Categorias</button>
+            <div class="dropdown-content">
+                {% for cat in categorias %}
+                    <a href="#">{{ cat.nome }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Tipos</button>
+            <div class="dropdown-content">
+                {% for t in tipos %}
+                    <a href="#">{{ t.nome }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="nav-center">
+        <input type="text" placeholder="Buscar produto...">
+        <button>🔍</button>
+    </div>
+</div>
+{% block content %}
+{% endblock %}
+
+<div class="footer">
+    <p>© 2026 Rhapsody</p>
+</div>
+</body>
+</html>

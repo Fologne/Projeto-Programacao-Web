@@ -1,12 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
-    <title>Rhapsody! Sua loja de card game!</title>
-</head>
-<body>
-    <h1>teste</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Rhapsody! Sua loja de card game!{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="section-title">
+        <span>🔥 Novidades</span>
+    </div>
+    <div class="grid">
+        {% for p in novidades %}
+        <a href="/produto/{{ p.slug }}/" class="card">
+            {% if p.imagem %}
+                <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+            {% else %}
+                <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+            {% endif %}
+            <h3>{{ p.nome }}</h3>
+            <p>R$ {{ p.preco }}</p>
+        </a>
+        {% empty %}
+            <p>Nenhum produto cadastrado.</p>
+        {% endfor %}
+    </div>
+    <div class="section-title">
+        <span>🏆 Mais Vendidos</span>
+    </div>
+    <div class="grid">
+        {% for p in mais_vendidos %}
+        <a href="/produto/{{ p.slug }}/" class="card">
+            {% if p.imagem %}
+                <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+            {% else %}
+                <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+            {% endif %}
+            <h3>{{ p.nome }}</h3>
+            <p>R$ {{ p.preco }}</p>
+        </a>
+        {% empty %}
+            <p>Nenhum produto encontrado.</p>
+        {% endfor %}
+    </div>
+    {% for tipo, produtos in produtos_por_tipo.items %}
+        <div class="section-title">
+            <span>🎴 {{ tipo }}</span>
+        </div>
+        <div class="grid">
+            {% for p in produtos %}
+            <a href="/produto/{{ p.slug }}/" class="card">
+                {% if p.imagem %}
+                    <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                {% else %}
+                    <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+                {% endif %}
+                <h3>{{ p.nome }}</h3>
+                <p>R$ {{ p.preco }}</p>
+            </a>
+            {% empty %}
+                <p>Nenhum produto desse tipo.</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

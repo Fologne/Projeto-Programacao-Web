@@ -1,3 +1,4 @@
+import random
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from categoria.models import Categoria
@@ -7,11 +8,22 @@ from django.contrib import messages
 from django.utils.text import slugify
 
 def visualizarHome(request):
-    produtos = Produto.objects.all().filter(esta_disponivel=True)
-    context = {
-        'produtos':produtos
-    }
-    return render(request, 'index.html', context)
+    novidades = Produto.objects.order_by('-criado_em')[:5]
+    mais_vendidos = Produto.objects.order_by('-qtd_vendida')[:5]
+    tipos_lista = Tipo.objects.all()
+    categorias = Categoria.objects.all()
+    produtos_por_tipo = {}
+    for tipo in tipos_lista:
+        produtos = list(Produto.objects.filter(tipo=tipo))
+        random.shuffle(produtos)
+        produtos_por_tipo[tipo.nome] = produtos[:5]
+    return render(request, 'index.html', {
+        'novidades': novidades,
+        'mais_vendidos': mais_vendidos,
+        'produtos_por_tipo': produtos_por_tipo,
+        'categorias': categorias,   # 🔥 importante
+        'tipos': tipos_lista        # 🔥 importante
+    })
 
 def cadastroProdutos(request):
     if request.method == 'POST':
