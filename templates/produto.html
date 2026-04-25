@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ produto.nome }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/produto.css' %}">
+{% endblock %}
+{% block content %}
+<div class="produto-container">
+    <div class="produto-sidebar">
+        {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        {% endif %}
+    </div>
+    <div class="produto-info">
+        <h1>{{ produto.nome }}</h1>
+        <p class="preco">R$ {{ produto.preco }}</p>
+        <p class="estoque">
+            Disponível: {{ produto.estoque }}
+        </p>
+        <div class="quantidade">
+            <button type="button" onclick="diminuir()">-</button>
+            <input type="number" id="qtd" value="1" min="1" max="{{ produto.estoque }}">
+            <button type="button" onclick="aumentar()">+</button>
+        </div>
+        <button class="btn-carrinho">
+            🛒 Adicionar ao Carrinho
+        </button>
+    </div>
+</div>
+<div class="relacionados">
+    <h2>🎴 Produtos Relacionados</h2>
+    <div class="grid-relacionados">
+        {% for p in relacionados %}
+        <a href="/produto/{{ p.slug }}/" class="card-rel">
+            {% if p.imagem %}
+                <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+            {% endif %}
+            <h3>{{ p.nome }}</h3>
+            <p>R$ {{ p.preco }}</p>
+        </a>
+        {% empty %}
+            <p>Sem produtos relacionados</p>
+        {% endfor %}
+    </div>
+</div>
+<script>
+function aumentar() {
+    let input = document.getElementById("qtd");
+    if (parseInt(input.value) < parseInt(input.max)) {
+        input.value = parseInt(input.value) + 1;
+    }
+}
+function diminuir() {
+    let input = document.getElementById("qtd");
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+    }
+}
+</script>
+{% endblock %}

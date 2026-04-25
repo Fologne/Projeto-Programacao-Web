@@ -1,6 +1,6 @@
 import random
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from categoria.models import Categoria
 from produto.models import Produto
 from tipo.models import Tipo
@@ -21,16 +21,14 @@ def visualizarHome(request):
         'novidades': novidades,
         'mais_vendidos': mais_vendidos,
         'produtos_por_tipo': produtos_por_tipo,
-        'categorias': categorias,   # 🔥 importante
-        'tipos': tipos_lista        # 🔥 importante
+        'categorias': categorias,
+        'tipos': tipos_lista
     })
 
 def cadastroProdutos(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         slug = slugify(nome)
-
-        # evitar slug duplicado
         contador = 1
         slug_original = slug
         while Produto.objects.filter(slug=slug).exists():
@@ -58,4 +56,18 @@ def cadastroProdutos(request):
     return render(request, 'cadastroProduto.html', {
         'categorias': categorias,
         'tipos': tipos
+    })
+    
+def visualizarProduto(request, slug):
+    produto = Produto.objects.get(slug=slug)
+    lista = list(
+        Produto.objects.filter(tipo=produto.tipo)
+        .exclude(id=produto.id)
+    )
+    relacionados = random.sample(lista, min(len(lista), 10))
+    return render(request, 'produto.html', {
+        'produto': produto,
+        'relacionados': relacionados,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
     })
