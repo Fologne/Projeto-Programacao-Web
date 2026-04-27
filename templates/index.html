@@ -12,11 +12,14 @@
     <div class="grid">
         {% for p in novidades %}
         <a href="/produto/{{ p.slug }}/" class="card">
+            <div class="img-wrapper">
             {% if p.imagem %}
                 <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                <img src="{{ p.imagem.url }}" class="img-zoom">
             {% else %}
-                <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+                <img src="{% static 'imagens/sem-imagem.png' %}">
             {% endif %}
+            </div>
             <h3>{{ p.nome }}</h3>
             <p>R$ {{ p.preco }}</p>
         </a>
@@ -30,11 +33,14 @@
     <div class="grid">
         {% for p in mais_vendidos %}
         <a href="/produto/{{ p.slug }}/" class="card">
+            <div class="img-wrapper">
             {% if p.imagem %}
                 <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                <img src="{{ p.imagem.url }}" class="img-zoom">
             {% else %}
-                <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+                <img src="{% static 'imagens/sem-imagem.png' %}">
             {% endif %}
+            </div>
             <h3>{{ p.nome }}</h3>
             <p>R$ {{ p.preco }}</p>
         </a>
@@ -49,11 +55,14 @@
         <div class="grid">
             {% for p in produtos %}
             <a href="/produto/{{ p.slug }}/" class="card">
+                <div class="img-wrapper">
                 {% if p.imagem %}
                     <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                    <img src="{{ p.imagem.url }}" class="img-zoom">
                 {% else %}
-                    <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+                    <img src="{% static 'imagens/sem-imagem.png' %}">
                 {% endif %}
+                </div>
                 <h3>{{ p.nome }}</h3>
                 <p>R$ {{ p.preco }}</p>
             </a>

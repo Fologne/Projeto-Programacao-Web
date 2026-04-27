@@ -24,5 +24,7 @@ urlpatterns = [
     path('', views.visualizarHome, name='visualizarHome'),
     path('cadastro-produto', views.cadastroProdutos, name='cadastroProdutos'),
     path('produto/<slug:slug>/', views.visualizarProduto, name='produto'),
+    path('categoria/<slug:slug>/', views.produtosPorCategoria, name='categoria'),
+    path('tipo/<slug:slug>/', views.produtosPorTipo, name='tipo'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas

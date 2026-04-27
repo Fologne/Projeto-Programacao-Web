@@ -71,3 +71,23 @@ def visualizarProduto(request, slug):
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })
+    
+def produtosPorCategoria(request, slug):
+    categoria = get_object_or_404(Categoria, slug=slug)
+    produtos = Produto.objects.filter(categoria=categoria)
+    return render(request, 'categoria.html', {
+        'categoria': categoria,
+        'produtos': produtos,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+
+def produtosPorTipo(request, slug):
+    tipo = get_object_or_404(Tipo, slug=slug)
+    produtos = Produto.objects.filter(tipo=tipo)
+    return render(request, 'tipo.html', {
+        'tipo': tipo,
+        'produtos': produtos,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })

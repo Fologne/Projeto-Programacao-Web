@@ -17,7 +17,7 @@
             <button class="dropbtn">Categorias</button>
             <div class="dropdown-content">
                 {% for cat in categorias %}
-                    <a href="#">{{ cat.nome }}</a>
+                    <a href="{% url 'categoria' cat.slug %}">{{ cat.nome }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -25,7 +25,7 @@
             <button class="dropbtn">Tipos</button>
             <div class="dropdown-content">
                 {% for t in tipos %}
-                    <a href="#">{{ t.nome }}</a>
+                    <a href="{% url 'tipo' t.slug %}">{{ t.nome }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -39,7 +39,8 @@
     {% block content %}
     {% endblock %}
 </div>
-
+<div id="zoom-preview"></div>
+<div id="zoom-global"></div>
 <div class="footer">
     <p>© 2026 Rhapsody</p>
 </div>

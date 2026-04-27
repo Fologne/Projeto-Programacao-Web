@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ tipo.nome }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/CeT.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>📂 {{ tipo.nome }}</h2>
+    <div class="grid">
+        {% for p in produtos %}
+        <a href="/produto/{{ p.slug }}/" class="card">
+            <div class="card-inner">
+                <div class="img-wrapper">
+                    {% if p.imagem %}
+                        <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                    {% else %}
+                        <img src="{% static 'imagens/sem-imagem.png' %}">
+                    {% endif %}
+                </div>
+                <h3>{{ p.nome }}</h3>
+                <p>R$ {{ p.preco }}</p>
+            </div>            
+        </a>
+        {% empty %}
+            <p>Sem produtos nesse tipo</p>
+        {% endfor %}
+    </div>
+</div>
+<div id="zoom-global"></div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const zoom = document.getElementById("zoom-global");
+
+    document.querySelectorAll(".img-wrapper img").forEach(img => {
+
+        img.addEventListener("mouseenter", (e) => {
+            zoom.innerHTML = `<img src="${img.src}">`;
+            zoom.style.display = "block";
+
+            const rect = img.getBoundingClientRect();
+
+            let left = rect.right + 15;
+            let top = rect.top;
+
+            // evita sair da tela direita
+            if (left + 320 > window.innerWidth) {
+                left = rect.left - 335;
+            }
+
+            // evita sair da tela embaixo
+            if (top + 400 > window.innerHeight) {
+                top = window.innerHeight - 420;
+            }
+
+            zoom.style.left = left + "px";
+            zoom.style.top = top + "px";
+        });
+
+        img.addEventListener("mouseleave", () => {
+            zoom.style.display = "none";
+        });
+
+    });
+
+});
+</script>
+{% endblock %}

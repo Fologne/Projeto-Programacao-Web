@@ -24,23 +24,21 @@ h2 {
     text-decoration: none;
     color: inherit;
     display: block;
-
+    position: relative;
+    z-index: 1;
     background: linear-gradient(145deg, #0a1f44, #142f66);
     border: 2px solid #f4c542;
     border-radius: 12px;
-
     padding: 15px;
     text-align: center;
-
     transition: 0.3s;
     cursor: pointer;
-
-    /* 🔥 sombra mais forte */
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .card:hover {
     transform: scale(1.05);
+    z-index: 9999;
     box-shadow: 0 0 15px rgba(244, 197, 66, 0.6);
 }
 
@@ -81,4 +79,60 @@ h2 {
     color: #f4c542;
     font-size: 20px;
     font-weight: bold;
+}
+
+/* CARD */
+.card {
+    position: relative;
+}
+
+/* WRAPPER NORMAL */
+.img-wrapper {
+    width: 100%;
+    height: 150px;
+    position: relative;
+}
+
+/* IMAGEM NORMAL */
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* IMAGEM ZOOM (POPUP) */
+.img-zoom {
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translateY(-50%);
+    width: 250px !important;
+    height: auto !important;
+    max-width: none !important;
+    background: white;
+    padding: 10px;
+    border: 2px solid #f4c542;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: 10000;
+}
+
+.grid .card:nth-child(5n),
+.grid .card:nth-child(5n-1) {
+    position: relative;
+}
+
+.grid .card:nth-child(5n) .img-zoom,
+.grid .card:nth-child(5n-1) .img-zoom {
+    left: auto;
+    right: 110%;
+}
+
+/* MOSTRAR NO HOVER */
+.card:hover .img-zoom {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
 }

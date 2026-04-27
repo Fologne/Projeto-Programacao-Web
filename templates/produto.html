@@ -13,6 +13,7 @@
     </div>
     <div class="produto-info">
         <h1>{{ produto.nome }}</h1>
+        <p class="descricao">{{ produto.descricao }}</p>
         <p class="preco">R$ {{ produto.preco }}</p>
         <p class="estoque">
             Disponível: {{ produto.estoque }}
@@ -32,9 +33,12 @@
     <div class="grid-relacionados">
         {% for p in relacionados %}
         <a href="/produto/{{ p.slug }}/" class="card-rel">
-            {% if p.imagem %}
+            <div class="img-wrapper">
                 <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
-            {% endif %}
+                <div class="img-zoom">
+                    <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                </div>
+            </div>
             <h3>{{ p.nome }}</h3>
             <p>R$ {{ p.preco }}</p>
         </a>
