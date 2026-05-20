@@ -8,13 +8,13 @@ from django.contrib import messages
 from django.utils.text import slugify
 
 def visualizarHome(request):
-    novidades = Produto.objects.order_by('-criado_em')[:5]
-    mais_vendidos = Produto.objects.order_by('-qtd_vendida')[:5]
+    novidades = Produto.objects.filter(esta_disponivel=True).order_by('-modificado_em')[:5]
+    mais_vendidos = Produto.objects.filter(esta_disponivel=True).order_by('-qtd_vendida')[:5]
     tipos_lista = Tipo.objects.all()
     categorias = Categoria.objects.all()
     produtos_por_tipo = {}
     for tipo in tipos_lista:
-        produtos = list(Produto.objects.filter(tipo=tipo))
+        produtos = list(Produto.objects.filter(tipo=tipo, esta_disponivel=True))
         random.shuffle(produtos)
         produtos_por_tipo[tipo.nome] = produtos[:5]
     return render(request, 'index.html', {
@@ -34,7 +34,6 @@ def cadastroProdutos(request):
         while Produto.objects.filter(slug=slug).exists():
             slug = f"{slug_original}-{contador}"
             contador += 1
-
         Produto.objects.create(
             nome=nome,
             descricao=request.POST.get('descricao'),
@@ -46,13 +45,10 @@ def cadastroProdutos(request):
             categoria_id=request.POST.get('categoria'),
             tipo_id=request.POST.get('tipo') or None
         )
-
         messages.success(request, "Produto cadastrado com sucesso!")
         return redirect('cadastroProdutos')
-
     categorias = Categoria.objects.all()
     tipos = Tipo.objects.all()
-
     return render(request, 'cadastroProduto.html', {
         'categorias': categorias,
         'tipos': tipos
@@ -74,7 +70,7 @@ def visualizarProduto(request, slug):
     
 def produtosPorCategoria(request, slug):
     categoria = get_object_or_404(Categoria, slug=slug)
-    produtos = Produto.objects.filter(categoria=categoria)
+    produtos = Produto.objects.filter(categoria=categoria, esta_disponivel=True)
     return render(request, 'categoria.html', {
         'categoria': categoria,
         'produtos': produtos,
@@ -84,10 +80,42 @@ def produtosPorCategoria(request, slug):
 
 def produtosPorTipo(request, slug):
     tipo = get_object_or_404(Tipo, slug=slug)
-    produtos = Produto.objects.filter(tipo=tipo)
+    produtos = Produto.objects.filter(tipo=tipo, esta_disponivel=True)
     return render(request, 'tipo.html', {
         'tipo': tipo,
         'produtos': produtos,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+
+def listaProduto(request):
+    produtos = Produto.objects.all()
+    categorias = Categoria.objects.all()
+    tipos = Tipo.objects.all()
+    return render(request, 'listaProduto.html', {
+        'produtos': produtos,
+        'categorias': categorias,
+        'tipos': tipos
+    })
+
+def alteraProduto(request, slug):
+    produto = get_object_or_404(Produto, slug=slug)
+    if request.method == 'POST':
+        produto.nome = request.POST.get('nome')
+        produto.descricao = request.POST.get('descricao')
+        produto.preco = request.POST.get('preco')
+        produto.estoque = request.POST.get('estoque')
+        produto.esta_disponivel = True if request.POST.get('esta_disponivel') else False
+        categoria_id = request.POST.get('categoria')
+        tipo_id = request.POST.get('tipo')
+        produto.categoria = Categoria.objects.get(id=categoria_id)
+        produto.tipo = Tipo.objects.get(id=tipo_id)
+        if request.FILES.get('imagem'):
+            produto.imagem = request.FILES.get('imagem')
+        produto.save()
+        return redirect('listaProduto')
+    return render(request, 'alteraProduto.html', {
+        'produto': produto,
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Lista de Produtos{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/listaProduto.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="titulo-pagina">
+        <h1>📦Lista de Produtos</h1>
+    </div>
+    <div class="grid-produtos">
+        {% for p in produtos %}
+        <a href="/alteraProduto/{{ p.slug }}/" class="card-produto">
+            <div class="img-wrapper">
+                {% if p.imagem %}
+                    <img src="{{ p.imagem.url }}" alt="{{ p.nome }}">
+                {% else %}
+                    <img src="{% static 'imagens/sem-imagem.png' %}" alt="Sem imagem">
+                {% endif %}
+            </div>
+            <div class="produto-info">
+                <h3>{{ p.nome }}</h3>
+                <p class="preco">
+                    R$ {{ p.preco }}
+                </p>
+                <p class="estoque">
+                    Estoque: {{ p.estoque }}
+                </p>
+                <p class="tipo">
+                    {{ p.tipo.nome }}
+                </p>
+            </div>
+            <button class="btn-editar">
+                ✏️ Editar Produto
+            </button>
+        </a>
+        {% empty %}
+            <p>Nenhum produto cadastrado.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

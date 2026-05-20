@@ -19,76 +19,85 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
-    position: relative;
-    z-index: 0;
 }
 
 /* CARD */
 .card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    z-index: 1;
     background: linear-gradient(145deg, #0a1f44, #142f66);
     border: 2px solid #f4c542;
     border-radius: 12px;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
-    text-decoration: none;
-    color: white;
     transition: 0.3s;
-    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
+/* HOVER CARD */
 .card:hover {
-    box-shadow: 0 0 15px rgba(244, 197, 66, 0.7);
-}
-
-/* IMAGEM NORMAL (CORREÇÃO PRINCIPAL) */
-.card .img-wrapper > img {
-    height: 200px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 10px auto;
-}
-
-/* TEXTO */
-.card h3 {
-    font-size: 14px;
-    color: #f4c542;
-    margin-bottom: 5px;
-}
-
-.card p {
-    font-weight: bold;
-    color: white;
+    transform: scale(1.05);
+    z-index: 9999;
+    box-shadow: 0 0 15px rgba(244, 197, 66, 0.6);
 }
 
 /* WRAPPER */
 .img-wrapper {
+    width: 100%;
+    height: 200px;
     position: relative;
     overflow: visible;
 }
 
-/* ZOOM GLOBAL (popup flutuante REAL) */
-#zoom-global {
-    position: fixed;
-    display: none;
-    width: 320px;
+/* IMAGEM NORMAL */
+.img-wrapper img:first-child {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* TEXTO */
+.card h3 {
+    color: #f4c542;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(244, 197, 66, 0.5);
+}
+
+.card p {
+    color: #f4c542;
+    font-weight: bold;
+}
+
+/* POPUP ZOOM */
+.img-zoom {
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translateY(-50%) scale(0.95);
+    width: 250px;
+    height: auto !important;
     background: white;
     padding: 10px;
     border: 2px solid #f4c542;
     border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    z-index: 9999999;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: 0.3s;
     pointer-events: none;
+    z-index: 99999;
 }
 
-#zoom-global img {
-    width: 100%;
-    height: auto;
+.img-zoom {
     object-fit: contain;
 }
 
-/* HOVER */
+/* MOSTRAR POPUP */
 .card:hover .img-zoom {
     opacity: 1;
     transform: translateY(-50%) scale(1);
@@ -97,13 +106,5 @@
 .grid .card:nth-child(5n) .img-zoom,
 .grid .card:nth-child(5n-1) .img-zoom {
     left: auto;
-    right: calc(100% + 15px);
-}
-
-.card-inner {
-    transition: 0.3s;
-}
-
-.card:hover .card-inner {
-    transform: scale(1.05);
+    right: 110%;
 }
