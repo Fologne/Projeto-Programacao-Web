@@ -14,3 +14,5 @@
 !templates/**
 !docs/
 !docs/**
+!banner/
+!banner/**
