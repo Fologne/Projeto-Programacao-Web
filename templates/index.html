@@ -6,6 +6,22 @@
 {% endblock %}
 {% block content %}
 <div class="container">
+    <div class="banner-carousel">
+        <div class="slides">
+            {% for banner in banners %}
+                <a href="{{ banner.link }}" class="slide {% if forloop.first %}active{% endif %}">
+                    <img src="{{ banner.imagem.url }}" alt="{{ banner.titulo }}">
+                </a>
+            {% endfor %}
+        </div>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+        <div class="indicators">
+            {% for banner in banners %}
+                <span class="dot {% if forloop.first %}active-dot{% endif %}"></span>
+            {% endfor %}
+        </div>
+    </div>
     <div class="section-title">
         <span>🔥 Novidades</span>
     </div>
@@ -72,4 +88,5 @@
         </div>
     {% endfor %}
 </div>
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

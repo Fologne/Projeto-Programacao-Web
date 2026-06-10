@@ -1,6 +1,7 @@
 import random
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from banner.models import Banner
 from categoria.models import Categoria
 from produto.models import Produto
 from tipo.models import Tipo
@@ -8,6 +9,7 @@ from django.contrib import messages
 from django.utils.text import slugify
 
 def visualizarHome(request):
+    banners = Banner.objects.filter(ativo=True).order_by('ordem')
     novidades = Produto.objects.filter(esta_disponivel=True).order_by('-modificado_em')[:5]
     mais_vendidos = Produto.objects.filter(esta_disponivel=True).order_by('-qtd_vendida')[:5]
     tipos_lista = Tipo.objects.all()
@@ -22,7 +24,8 @@ def visualizarHome(request):
         'mais_vendidos': mais_vendidos,
         'produtos_por_tipo': produtos_por_tipo,
         'categorias': categorias,
-        'tipos': tipos_lista
+        'tipos': tipos_lista,
+        'banners': banners
     })
 
 def cadastroProdutos(request):
@@ -116,6 +119,25 @@ def alteraProduto(request, slug):
         return redirect('listaProduto')
     return render(request, 'alteraProduto.html', {
         'produto': produto,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+    
+def cadastroBanner(request):
+    if request.method == 'POST':
+        Banner.objects.create(
+            titulo=request.POST.get('titulo'),
+            imagem=request.FILES.get('imagem'),
+            link=request.POST.get('link'),
+            ordem=request.POST.get('ordem') or 0,
+            ativo=request.POST.get('ativo') == 'true'
+        )
+        messages.success(
+            request,
+            'Banner cadastrado com sucesso!'
+        )
+        return redirect('cadastroBanner')
+    return render(request,'cadastroBanner.html',{
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })

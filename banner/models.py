@@ -8,6 +8,7 @@ class Banner(models.Model):
     link = models.CharField(max_length=400,help_text='Ex: /categoria/yugioh/ ou /tipo/sleeves/')
     ativo = models.BooleanField(default=True)
     criado_em = models.DateTimeField(auto_now_add=True)
+    ordem = models.PositiveIntegerField(default=0)
     class Meta:
         verbose_name = 'Banner'
         verbose_name_plural = 'Banners'
