@@ -1,0 +1,123 @@
+.altera-container{
+    width: 90%;
+    max-width: 1300px;
+    margin: 40px auto;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.produto-preview{
+    width: 40%;
+    position: sticky;
+    top: 100px;
+}
+
+.img-box{
+    background: linear-gradient(145deg, #0a1f44, #142f66);
+    border: 3px solid #f4c542;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.img-box img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.img-box img:hover{
+    transform: scale(1.02);
+}
+
+.form-container{
+    flex: 1;
+    background: linear-gradient(145deg, #0a1f44, #142f66);
+    border: 3px solid #f4c542;
+    border-radius: 15px;
+    padding: 35px;
+    color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.form-container h1{
+    color: #f4c542;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-container label{
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #f4c542;
+}
+
+.form-container input{
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.form-container input:focus{
+    border-color: #f4c542;
+    box-shadow: 0 0 10px rgba(244,197,66,0.5);
+}
+
+.checkbox-area{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.checkbox-area input{
+    width: auto;
+    transform: scale(1.2);
+}
+
+.checkbox-area label{
+    margin: 0;
+    color: white;
+}
+
+.form-container button{
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #f4c542, #ffd700);
+    color: #0a1f44;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-container button:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(244,197,66,0.7);
+}
+
+@media(max-width:1000px){
+
+    .altera-container{
+        flex-direction: column;
+    }
+
+    .produto-preview{
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+}

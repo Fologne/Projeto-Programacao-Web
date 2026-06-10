@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Lista de Banners{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styleListaBanner.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-banner">
+    <h2>Lista de Banners</h2>
+    {% if banners %}
+        <div class="lista-banners">
+            {% for banner in banners %}
+                <a href="{% url 'alteraBanner' banner.slug %}"
+                   class="banner-item">
+                    <span class="titulo">
+                        {{ banner.titulo }}
+                    </span>
+                    <span class="status
+                    {% if banner.ativo %}
+                        ativo
+                    {% else %}
+                        inativo
+                    {% endif %}
+                    ">
+                        {% if banner.ativo %}
+                            Ativo
+                        {% else %}
+                            Inativo
+                        {% endif %}
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Nenhum banner cadastrado.</p>
+    {% endif %}
+</div>
+{% endblock %}

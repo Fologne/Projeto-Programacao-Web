@@ -141,3 +141,32 @@ def cadastroBanner(request):
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })
+    
+def listaBanner(request):
+    banners = Banner.objects.all().order_by('criado_em')
+    return render(request,'listaBanner.html', {
+        'banners': banners,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+
+def alteraBanner(request, slug):
+    banner = get_object_or_404(Banner, slug=slug)
+    if request.method == 'POST':
+        banner.titulo = request.POST.get('titulo')
+        banner.link = request.POST.get('link')
+        banner.ordem = request.POST.get('ordem')
+        banner.ativo = (
+            True
+            if request.POST.get('ativo') == 'on'
+            else False
+        )
+        if request.FILES.get('imagem'):
+            banner.imagem = request.FILES.get('imagem')
+        banner.save()
+        return redirect('listaBanner')
+    return render(request,'alteraBanner.html', {
+        'banner': banner,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })

@@ -83,8 +83,36 @@ body {
 }
 
 /* DIREITA */
-.nav-right {
+.nav-right{
     justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding-right: 30px;
+}
+
+.auth-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+}
+
+.auth-icon img{
+    width: 75px;
+    height: 75px;
+
+    object-fit: contain;
+
+    transition: 0.25s;
+}
+
+.auth-icon img:hover{
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px #f4c542);
 }
 
 /* DROPDOWN */

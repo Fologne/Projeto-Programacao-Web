@@ -29,5 +29,7 @@ urlpatterns = [
     path('lista-produtos/', views.listaProduto, name='listaProduto'),
     path('alteraProduto/<slug:slug>/', views.alteraProduto, name='alteraProduto'),
     path('cadastro-banner/', views.cadastroBanner, name='cadastroBanner'),
+    path('lista-banners/', views.listaBanner, name='listaBanner'),
+    path('alteraBanner/<slug:slug>/', views.alteraBanner, name='alteraBanner'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas
