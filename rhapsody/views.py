@@ -1,6 +1,8 @@
 import random
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.hashers import make_password
+from usuario.models import Usuario
 from banner.models import Banner
 from categoria.models import Categoria
 from produto.models import Produto
@@ -167,6 +169,43 @@ def alteraBanner(request, slug):
         return redirect('listaBanner')
     return render(request,'alteraBanner.html', {
         'banner': banner,
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+    
+def signup (request):
+    if request.session.get('usuario_id'):
+        return redirect('/')
+    if request.method == 'POST':
+        senha = request.POST.get('senha')
+        confirmar = request.POST.get('confirmar_senha')
+        if senha != confirmar:
+            messages.error(request, 'As senhas não coincidem.')
+            return redirect('signup')
+        usuario = Usuario.objects.create(
+            nome_completo=request.POST.get('nome_completo'),
+            username=request.POST.get('username'),
+            data_nascimento=request.POST.get('data_nascimento'),
+            cpf=request.POST.get('cpf'),
+            foto_perfil=request.FILES.get('foto_perfil'),
+            logradouro=request.POST.get('logradouro'),
+            bairro=request.POST.get('bairro'),
+            cep=request.POST.get('cep'),
+            cidade=request.POST.get('cidade'),
+            estado=request.POST.get('estado'),
+            email=request.POST.get('email'),
+            senha=make_password(senha),
+            tipo_usuario='cliente'
+        )
+        request.session['usuario_id'] = usuario.id
+        request.session['username'] = usuario.username
+        request.session['tipo_usuario'] = usuario.tipo_usuario
+        destino = request.GET.get(
+            'next',
+            '/'
+        )
+        return redirect(destino)
+    return render(request,'signup.html', {
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })

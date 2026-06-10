@@ -87,3 +87,30 @@ button[type="submit"]:hover {
     z-index: 9999;
     transition: opacity 0.5s ease;
 }
+
+input[type="date"]{
+    color: white;
+}
+
+input[type="file"]{
+    padding: 8px;
+}
+
+input::placeholder{
+    color: rgba(255,255,255,0.7);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.form-grid div{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-grid .full{
+    grid-column:1 / span 2;
+}

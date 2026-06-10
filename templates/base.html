@@ -38,7 +38,7 @@
         <a href="#" class="auth-icon">
             <img src="{% static 'imagens/login.webp' %}" alt="Login">
         </a>
-        <a href="#" class="auth-icon">
+        <a href="{% url 'signup' %}?next={{ request.path }}" class="auth-icon">
             <img src="{% static 'imagens/signup.webp' %}" alt="Cadastro">
         </a>
     </div>

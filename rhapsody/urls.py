@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from rhapsody import views, settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.visualizarHome, name='visualizarHome'),
     path('cadastro-produto', views.cadastroProdutos, name='cadastroProdutos'),
     path('produto/<slug:slug>/', views.visualizarProduto, name='produto'),
@@ -31,5 +30,6 @@ urlpatterns = [
     path('cadastro-banner/', views.cadastroBanner, name='cadastroBanner'),
     path('lista-banners/', views.listaBanner, name='listaBanner'),
     path('alteraBanner/<slug:slug>/', views.alteraBanner, name='alteraBanner'),
+    path('signup/', views.signup, name='signup'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas

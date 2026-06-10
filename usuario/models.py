@@ -1,6 +1,8 @@
 from django.db import models
 
 class Usuario(models.Model):
+    TIPOS = (('cliente', 'Cliente'), ('admin', 'Administrador'), ('superadmin', 'Super Administrador'))
+    tipo_usuario = models.CharField(max_length=20, choices=TIPOS, default='cliente')
     nome_completo = models.CharField(max_length=150)
     username = models.CharField(max_length=50, unique=True)
     data_nascimento = models.DateField()
