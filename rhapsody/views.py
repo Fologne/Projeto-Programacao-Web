@@ -243,3 +243,34 @@ def login(request):
 def logout(request):
     request.session.flush()
     return redirect('/')
+
+def perfil(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+    usuario = Usuario.objects.get(id=usuario_id)
+    if request.method == 'POST':
+        usuario.username = request.POST.get('username')
+        usuario.email = request.POST.get('email')
+        usuario.logradouro = request.POST.get('logradouro')
+        usuario.bairro = request.POST.get('bairro')
+        usuario.cep = request.POST.get('cep')
+        usuario.cidade = request.POST.get('cidade')
+        usuario.estado = request.POST.get('estado')
+        if request.FILES.get('foto_perfil'):
+            usuario.foto_perfil = request.FILES.get(
+                'foto_perfil'
+            )
+        usuario.save()
+        messages.success(
+            request,
+            'Perfil atualizado com sucesso.'
+        )
+    ultimo_pedido = None
+    # ultimo_pedido = Pedido.objects.filter(usuario=usuario).order_by('-id').first()
+    return render(request, 'perfil.html', {
+            'usuario': usuario,
+            'ultimo_pedido': ultimo_pedido,
+            'categorias': Categoria.objects.all(),
+            'tipos': Tipo.objects.all()
+    })
