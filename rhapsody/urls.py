@@ -31,6 +31,7 @@ urlpatterns = [
     path('lista-banners/', views.listaBanner, name='listaBanner'),
     path('alteraBanner/<slug:slug>/', views.alteraBanner, name='alteraBanner'),
     path('signup/', views.signup, name='signup'),
+    path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas

@@ -1,7 +1,8 @@
 import random
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password, make_password
+from django.db.models import Q
 from usuario.models import Usuario
 from banner.models import Banner
 from categoria.models import Categoria
@@ -210,8 +211,35 @@ def signup (request):
         'tipos': Tipo.objects.all()
     })
     
+def login(request):
+    if request.session.get('usuario_id'):
+        return redirect('/')
+    if request.method == 'POST':
+        login_digitado = request.POST.get('login')
+        senha = request.POST.get('senha')
+        try:
+            usuario = Usuario.objects.get(
+                Q(username=login_digitado) |
+                Q(email=login_digitado)
+            )
+            if check_password(
+                senha,
+                usuario.senha
+            ):
+                request.session['usuario_id'] = usuario.id
+                request.session['username'] = usuario.username
+                request.session['tipo_usuario'] = usuario.tipo_usuario
+                destino = request.POST.get('next', '/')
+                return redirect(destino)
+            else:
+                messages.error(request, 'Senha incorreta.')
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Usuário não encontrado.')
+    return render(request,'login.html', {
+        'categorias': Categoria.objects.all(),
+        'tipos': Tipo.objects.all()
+    })
+
 def logout(request):
-
     request.session.flush()
-
     return redirect('/')
