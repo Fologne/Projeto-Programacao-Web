@@ -2,87 +2,80 @@
 {% load static %}
 {% block title %}Meu Perfil{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet"
-      href="{% static 'css/perfil.css' %}">
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}">
 {% endblock %}
 {% block content %}
 <div class="perfil-card">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="perfil-left">
-            <img
-                src="{% if usuario.foto_perfil %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="perfil-left">
+        <h3>{{ usuario.nome_completo }}</h3>
+        <img
+            src="{% if usuario.foto_perfil %}
                     {{ usuario.foto_perfil.url }}
-                {% else %}
+                 {% else %}
                     {% static 'imagens/icone.png' %}
-                {% endif %}"
-                class="foto-perfil"
-            >
-            <input
-                type="file"
-                name="foto_perfil"
-            >
-        </div>
-        <div class="perfil-right">
-            <h2>Meu Perfil</h2>
-            <label>Usuário</label>
-            <input
-                type="text"
-                name="username"
-                value="{{ usuario.username }}"
-            >
-            <label>Email</label>
-            <input
-                type="email"
-                name="email"
-                value="{{ usuario.email }}"
-            >
-            <label>Logradouro</label>
-            <input
-                type="text"
-                name="logradouro"
-                value="{{ usuario.logradouro }}"
-            >
-            <label>Bairro</label>
-            <input
-                type="text"
-                name="bairro"
-                value="{{ usuario.bairro }}"
-            >
-            <label>CEP</label>
-            <input
-                type="text"
-                name="cep"
-                value="{{ usuario.cep }}"
-            >
-            <label>Cidade</label>
-            <input
-                type="text"
-                name="cidade"
-                value="{{ usuario.cidade }}"
-            >
-            <label>Estado</label>
-            <input
-                type="text"
-                name="estado"
-                value="{{ usuario.estado }}"
-            >
-            <button type="submit">
-                Salvar Alterações
-            </button>
-        </div>
-    </form>
+                 {% endif %}"
+            class="foto-perfil"
+            alt="Foto de Perfil"
+        >
+        <p>@{{ usuario.username }}</p>
+        <input type="file" name="foto_perfil">
+    </div>
+    <div class="perfil-right">
+        <h2>Dados da Conta</h2>
+        <label>Usuário</label>
+        <input type="text" name="username" value="{{ usuario.username }}">
+        <label>Email</label>
+        <input type="email" name="email" value="{{ usuario.email }}">
+        <label>Logradouro</label>
+        <input type="text" name="logradouro" value="{{ usuario.logradouro }}">
+        <label>Bairro</label>
+        <input type="text" name="bairro" value="{{ usuario.bairro }}">
+        <label>CEP</label>
+        <input type="text" name="cep" value="{{ usuario.cep }}">
+        <label>Cidade</label>
+        <input type="text" name="cidade" value="{{ usuario.cidade }}">
+        <label>Estado</label>
+        <input type="text" name="estado" value="{{ usuario.estado }}">
+        <button type="submit">
+            Salvar Alterações
+        </button>
+    </div>
+</form>
+</div>
+<div class="perfil-acoes">
+<a href="#" class="acao-card">
+    <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
+    <h3>Meu Carrinho</h3>
+</a>
+<a href="#" class="acao-card">
+    <img
+        src="{% static 'imagens/pedido.png' %}"
+        alt="Pedidos"
+    >
+    <h3>Meus Pedidos</h3>
+</a>
 </div>
 <div class="pedido-card">
-    <h2>Último Pedido</h2>
-    {% if ultimo_pedido %}
-        <p>
-            Pedido #{{ ultimo_pedido.id }}
-        </p>
-    {% else %}
-        <p>
-            Você ainda não realizou pedidos.
-        </p>
-    {% endif %}
+<h2>Último Pedido</h2>
+{% if ultimo_pedido %}
+    <p>
+        Pedido #{{ ultimo_pedido.id }}
+    </p>
+    <p>
+        Data: {{ ultimo_pedido.data }}
+    </p>
+    <p>
+        Total: R$ {{ ultimo_pedido.valor_total }}
+    </p>
+    <p>
+        Status: {{ ultimo_pedido.status }}
+    </p>
+{% else %}
+    <p>
+        Você ainda não realizou pedidos.
+    </p>
+{% endif %}
 </div>
 {% endblock %}

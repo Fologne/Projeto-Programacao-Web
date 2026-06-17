@@ -262,3 +262,32 @@ body {
     display:block;
 }
 
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 15px;
+    text-decoration:none;
+}
+
+.menu-item:hover{
+    background-color:#f5f5f5;
+}
+
+.menu-icon{
+    width:22px;
+    height:22px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
+.perfil-icon{
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.user-menu a:last-child{
+    border-top:1px solid #f4c542;
+    margin-top:5px;
+    padding-top:12px;
+}

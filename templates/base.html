@@ -40,7 +40,7 @@
                 <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
             </a>
             <div class="user-dropdown">
-                <a href="#">
+                <a href="{% url 'perfil' %}">
                     <img
                         src="{% if usuario_logado.foto_perfil %}
                             {{ usuario_logado.foto_perfil.url }}
@@ -52,10 +52,30 @@
                     >
                 </a>
                 <div class="user-menu">
-                    <a href="{% url 'perfil' %}">Perfil</a>
-                    <a href="#">Pedidos</a>
-                    <a href="#">Carrinho</a>
-                    <a href="{% url 'logout' %}">Logout</a>
+                    <a href="{% url 'perfil' %}" class="menu-item">
+                        <img
+                            src="{% if usuario_logado.foto_perfil %}
+                            {{ usuario_logado.foto_perfil.url }}
+                            {% else %}
+                            {% static 'imagens/icone.png' %}
+                            {% endif %}"
+                            class="menu-icon perfil-icon"
+                            alt="Perfil"
+                        >
+                        <span>Meu Perfil</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <img src="{% static 'imagens/pedido.png' %}" class="menu-icon" alt="Pedidos">
+                        <span>Meus Pedidos</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <img src="{% static 'imagens/carrinho.png' %}" class="menu-icon" alt="Carrinho">
+                        <span>Meu Carrinho</span>
+                    </a>
+                    <a href="{% url 'logout' %}" class="menu-item">
+                        <img src="{% static 'imagens/logout.png' %}" class="menu-icon" alt="Logout">
+                        <span>Sair</span>
+                    </a>
                 </div>
             </div>
             {% else %}
