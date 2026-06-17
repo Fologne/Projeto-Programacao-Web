@@ -209,3 +209,9 @@ def signup (request):
         'categorias': Categoria.objects.all(),
         'tipos': Tipo.objects.all()
     })
+    
+def logout(request):
+
+    request.session.flush()
+
+    return redirect('/')

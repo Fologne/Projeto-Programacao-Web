@@ -35,13 +35,38 @@
         <button>🔍</button>
     </div>
     <div class="nav-right">
-        <a href="#" class="auth-icon">
-            <img src="{% static 'imagens/login.webp' %}" alt="Login">
-        </a>
-        <a href="{% url 'signup' %}?next={{ request.path }}" class="auth-icon">
-            <img src="{% static 'imagens/signup.webp' %}" alt="Cadastro">
-        </a>
-    </div>
+        {% if usuario_logado %}
+            <a href="#" class="cart-icon">
+                <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
+            </a>
+            <div class="user-dropdown">
+                <a href="#">
+                    <img
+                        src="{% if usuario_logado.foto_perfil %}
+                            {{ usuario_logado.foto_perfil.url }}
+                            {% else %}
+                            {% static 'imagens/icone.png' %}
+                     {% endif %}"
+                    class="profile-img"
+                    alt="Perfil"
+                    >
+                </a>
+                <div class="user-menu">
+                    <a href="#">Perfil</a>
+                    <a href="#">Pedidos</a>
+                    <a href="#">Carrinho</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <a href="#" class="auth-icon">
+                <img src="{% static 'imagens/login.webp' %}" alt="Login">
+            </a>
+            <a href="{% url 'signup' %}?next={{ request.path }}" class="auth-icon">
+                <img src="{% static 'imagens/signup.webp' %}" alt="Cadastro">
+            </a>
+        {% endif %}
+</div>
 </div>
 <div class="main-content">
     {% block content %}

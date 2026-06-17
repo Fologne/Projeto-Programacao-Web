@@ -195,3 +195,71 @@ body {
     padding: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
+
+.cart-icon img{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+    transition:.25s;
+}
+
+.cart-icon img:hover{
+    transform:scale(1.1);
+}
+
+.profile-img{
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    border:2px solid #f4c542;
+
+    cursor:pointer;
+}
+
+.user-dropdown{
+    position:relative;
+}
+
+.user-menu{
+    display:none;
+
+    position:absolute;
+
+    top:55px;
+    right:0;
+
+    min-width:180px;
+
+    background:#0a1f44;
+
+    border:1px solid #f4c542;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    z-index:1000000;
+}
+
+.user-menu a{
+    display:block;
+
+    padding:12px;
+
+    text-decoration:none;
+
+    color:white;
+}
+
+.user-menu a:hover{
+    background:#f4c542;
+    color:#0a1f44;
+}
+
+.user-dropdown:hover .user-menu{
+    display:block;
+}
+

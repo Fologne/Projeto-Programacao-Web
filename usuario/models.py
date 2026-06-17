@@ -7,7 +7,7 @@ class Usuario(models.Model):
     username = models.CharField(max_length=50, unique=True)
     data_nascimento = models.DateField()
     cpf = models.CharField(max_length=14, unique=True)
-    foto_perfil = models.ImageField(upload_to='fotos/categoria', blank=True, null=True)
+    foto_perfil = models.ImageField(upload_to='fotos/usuario', blank=True, null=True)
     logradouro = models.CharField(max_length=150)
     bairro = models.CharField(max_length=100)
     cep = models.CharField(max_length=9)
