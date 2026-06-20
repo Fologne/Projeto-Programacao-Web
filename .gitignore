@@ -18,3 +18,7 @@
 !banner/**
 !usuario/
 !usuario/**
+!pedidos/
+!pedidos/**
+!carrinho/
+!carrinho/**
