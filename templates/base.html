@@ -31,8 +31,10 @@
         </div>
     </div>
     <div class="nav-center">
-        <input type="text" placeholder="Buscar produto...">
-        <button>🔍</button>
+        <form action="{% url 'buscar' %}" method="GET">
+            <input type="text" name="q" placeholder="Buscar produto...">
+            <button type="submit">🔍</button>
+        </form>
     </div>
     <div class="nav-right">
         {% if usuario_logado %}
@@ -64,11 +66,11 @@
                         >
                         <span>Meu Perfil</span>
                     </a>
-                    <a href="#" class="menu-item">
+                    <a href="{% url 'pedidos' %}" class="menu-item">
                         <img src="{% static 'imagens/pedido.png' %}" class="menu-icon" alt="Pedidos">
                         <span>Meus Pedidos</span>
                     </a>
-                    <a href="{% url 'carrinho'%}" class="menu-item">
+                    <a href="{% url 'carrinho' %}" class="menu-item">
                         <img src="{% static 'imagens/carrinho.png' %}" class="menu-icon" alt="Carrinho">
                         <span>Meu Carrinho</span>
                     </a>

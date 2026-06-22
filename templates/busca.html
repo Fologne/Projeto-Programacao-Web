@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Busca{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/busca.css' %}">
+{% endblock %}
+{% block content %}
+<div class="busca-container">
+    <aside class="filtros">
+        <h2>Filtros</h2>
+        <form method="GET">
+            <input type="hidden" name="q" value="{{ termo }}">
+            <h3>Categoria</h3>
+            <select name="categoria">
+                <option value="">Todas</option>
+                {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if categoria == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.nome }}</option>
+                {% endfor %}
+            </select>
+            <h3>Tipo</h3>
+            <select name="tipo">
+                <option value="">Todos</option>
+                {% for t in tipos %}
+                <option value="{{ t.id }}"{% if tipo == t.id|stringformat:"s" %}selected {% endif %}>{{ t.nome }}</option>
+                {% endfor %}
+            </select>
+            <h3>Preço</h3>
+            <label>
+                <input type="radio" name="preco" value="" {% if not faixa %}checked{% endif %}>Todos
+            </label>
+            <label>
+                <input type="radio" name="preco" value="100" {% if faixa == "100" %}checked{% endif %}>Até R$100
+            </label>
+            <label>
+                <input type="radio" name="preco" value="200" {% if faixa == "200" %}checked{% endif %}>R$101 - R$200
+            </label>
+            <label>
+                <input type="radio" name="preco" value="500" {% if faixa == "500" %}checked{% endif %}>R$201 - R$500
+            </label>
+            <label>
+                <input type="radio" name="preco" value="501" {% if faixa == "501" %}checked{% endif %}>Acima de R$500
+            </label>
+            <h3>Disponibilidade</h3>
+            <label>
+                <input type="checkbox" name="estoque" value="1" {% if estoque %}checked{% endif %}>Apenas em estoque
+            </label>
+            <h3>Ordenar por</h3>
+            <select name="ordenar">
+                <option value="az" {% if ordenar == "az" %}selected{% endif %}>A → Z</option>
+                <option value="za" {% if ordenar == "za" %}selected{% endif %}>Z → A</option>
+                <option value="menor" {% if ordenar == "menor" %}selected{% endif %}>Menor preço</option>
+                <option value="maior" {% if ordenar == "maior" %}selected{% endif %}>Maior preço</option>
+                <option value="recentes" {% if ordenar == "recentes" %}selected{% endif %}>Mais recentes</option>
+            </select>
+            <button type="submit">
+                Aplicar filtros
+            </button>
+        </form>
+    </aside>
+    <section class="resultado">
+        <h2>Resultados para "{{ termo }}"</h2>
+        <div class="grid-produtos">
+            {% for produto in produtos %}
+                <a href="{% url 'produto' produto.slug %}" class="card">
+                    <div class="img-wrapper">
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                        <div class="img-zoom">
+                            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                        </div>
+                    </div>
+                    <h3>{{ produto.nome }}</h3>
+                    <p>R$ {{ produto.preco }}</p>
+                </a>
+                {% empty %}
+                    <p>Nenhum produto encontrado.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

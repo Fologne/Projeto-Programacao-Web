@@ -3,6 +3,8 @@ from categoria.models import Categoria
 from produto.models import Produto
 from tipo.models import Tipo
 from usuario.models import Usuario
+from pedidos.models import Pedido, ItemPedido
+from django.contrib import messages
 from .models import (Carrinho, ItemCarrinho)
 
 def adicionarCarrinho(request, produto_id):
@@ -55,3 +57,24 @@ def removerItemCarrinho(request, item_id):
     item = get_object_or_404(ItemCarrinho, id=item_id, carrinho__usuario_id=request.session.get('usuario_id'))
     item.delete()
     return redirect('carrinho')
+
+def finalizarCompra(request):
+    usuario = get_object_or_404(Usuario, id=request.session.get("usuario_id"))
+    carrinho = get_object_or_404(Carrinho, usuario=usuario)
+    if not carrinho.itens.exists():
+        messages.error(request, "Carrinho vazio.")
+        return redirect("carrinho")
+    total = 0
+    for item in carrinho.itens.all():
+        if item.quantidade > item.produto.estoque:
+            messages.error(request, f"Estoque insuficiente para {item.produto.nome}.")
+            return redirect("carrinho")
+        total += item.produto.preco * item.quantidade
+    pedido = Pedido.objects.create(usuario=usuario, total=total)
+    for item in carrinho.itens.all():
+        ItemPedido.objects.create(pedido=pedido, produto=item.produto, quantidade=item.quantidade, preco=item.produto.preco)
+        item.produto.estoque -= item.quantidade
+        item.produto.save()
+    carrinho.itens.all().delete()
+    messages.success(request, "Compra realizada com sucesso!")
+    return redirect("pedidos")

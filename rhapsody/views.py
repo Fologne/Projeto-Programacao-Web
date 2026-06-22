@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.hashers import check_password, make_password
 from django.db.models import Q
 from carrinho.models import Carrinho, ItemCarrinho
+from pedidos.models import Pedido
 from usuario.models import Usuario
 from banner.models import Banner
 from categoria.models import Categoria
@@ -268,10 +269,56 @@ def perfil(request):
             'Perfil atualizado com sucesso.'
         )
     ultimo_pedido = None
-    # ultimo_pedido = Pedido.objects.filter(usuario=usuario).order_by('-id').first()
+    ultimo_pedido = Pedido.objects.filter(usuario=usuario).order_by('-id').first()
     return render(request, 'perfil.html', {
             'usuario': usuario,
             'ultimo_pedido': ultimo_pedido,
             'categorias': Categoria.objects.all(),
             'tipos': Tipo.objects.all()
+    })
+    
+def buscar(request):
+    termo = request.GET.get("q", "").strip()
+    faixa = request.GET.get("preco", "")
+    categoria = request.GET.get("categoria", "")
+    tipo = request.GET.get("tipo", "")
+    estoque = request.GET.get("estoque", "")
+    ordenar = request.GET.get("ordenar", "az")
+    produtos = Produto.objects.all()
+    if termo:
+        produtos = produtos.filter(Q(nome__icontains=termo) | Q(descricao__icontains=termo))
+    if categoria:
+        produtos = produtos.filter(categoria__id=categoria)
+    if tipo:
+        produtos = produtos.filter(tipo__id=tipo)
+    if faixa == "100":
+        produtos = produtos.filter(preco__lte=100)
+    elif faixa == "200":
+        produtos = produtos.filter(preco__gte=101, preco__lte=200)
+    elif faixa == "500":
+        produtos = produtos.filter(preco__gte=201, preco__lte=500)
+    elif faixa == "501":
+        produtos = produtos.filter(preco__gte=501)
+    if estoque:
+        produtos = produtos.filter(estoque__gt=0)
+    if ordenar == "az":
+        produtos = produtos.order_by("nome")
+    elif ordenar == "za":
+        produtos = produtos.order_by("-nome")
+    elif ordenar == "menor":
+        produtos = produtos.order_by("preco")
+    elif ordenar == "maior":
+        produtos = produtos.order_by("-preco")
+    elif ordenar == "recentes":
+        produtos = produtos.order_by("-id")
+    return render(request, "busca.html", {
+        "produtos": produtos,
+        "termo": termo,
+        "faixa": faixa,
+        "categoria": categoria,
+        "tipo": tipo,
+        "estoque": estoque,
+        "ordenar": ordenar,
+        "categorias": Categoria.objects.all(),
+        "tipos": Tipo.objects.all(),
     })

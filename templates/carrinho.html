@@ -33,7 +33,9 @@
         <div class="total-box">
             <h2>Total: R$ {{ total|floatformat:2 }}</h2>
             <button>
-                Finalizar Compra
+                <a href="{% url 'finalizarCompra' %}" class="btn-finalizar">
+                    Finalizar Compra
+                </a>
             </button>
         </div>
     {% else %}
