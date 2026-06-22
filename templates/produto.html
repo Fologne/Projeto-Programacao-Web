@@ -18,14 +18,17 @@
         <p class="estoque">
             Disponível: {{ produto.estoque }}
         </p>
-        <div class="quantidade">
-            <button type="button" onclick="diminuir()">-</button>
-            <input type="number" id="qtd" value="1" min="1" max="{{ produto.estoque }}">
-            <button type="button" onclick="aumentar()">+</button>
-        </div>
-        <button class="btn-carrinho">
-            🛒 Adicionar ao Carrinho
-        </button>
+        <form action="{% url 'adicionarCarrinho' produto.id %}" method="POST">
+            {% csrf_token %}
+            <div class="quantidade">
+                <button type="button" onclick="diminuir()">-</button>
+                <input type="number" id="qtd" name="quantidade" value="1" min="1" max="{{ produto.estoque }}">
+                <button type="button" onclick="aumentar()">+</button>
+            </div>
+            <button type="submit" class="btn-carrinho">
+                🛒 Adicionar ao Carrinho
+            </button>
+        </form>
     </div>
 </div>
 <div class="relacionados">

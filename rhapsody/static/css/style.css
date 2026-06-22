@@ -1,5 +1,5 @@
-html, body {
-    overflow: visible !important;
+html{
+    height:100%;
 }
 
 body {
@@ -7,10 +7,14 @@ body {
     padding-top: 70px;
     font-family: Arial, sans-serif;
     background-color: #ffffff;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
 .main-content {
     display: block;
+    flex:1;
 }
 
 /* NAVBAR */

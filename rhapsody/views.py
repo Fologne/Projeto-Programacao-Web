@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.hashers import check_password, make_password
 from django.db.models import Q
+from carrinho.models import Carrinho, ItemCarrinho
 from usuario.models import Usuario
 from banner.models import Banner
 from categoria.models import Categoria

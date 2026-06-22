@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Carrinho{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/carrinho.css' %}">{% endblock %}
+{% block content %}
+<div class="carrinho-container">
+    <h1>🛒 Meu Carrinho</h1>
+    {% if carrinho.itens.all %}
+        {% for item in carrinho.itens.all %}
+        <div class="item-carrinho">
+            <div class="produto-img">
+                {% if item.produto.imagem %}
+                    <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}">
+                {% endif %}
+            </div>
+            <div class="produto-info">
+                <h3>{{ item.produto.nome }}</h3>
+                <div class="quantidade-box">
+                    <a href="{% url 'diminuirItemCarrinho' item.id %} "class="btn-qtd">-</a>
+                    <span>{{ item.quantidade }}</span>
+                    <a href="{% url 'aumentarItemCarrinho' item.id %} "class="btn-qtd">+</a>
+                </div>
+                <p>R$ {{ item.produto.preco }}</p>
+            </div>
+            <div class="subtotal">
+                R$ {{ item.subtotal|floatformat:2 }}
+            </div>
+            <div class="acoes-item">
+                <a href="{% url 'removerItemCarrinho' item.id %} "class="btn-remover">Remover</a>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="total-box">
+            <h2>Total: R$ {{ total|floatformat:2 }}</h2>
+            <button>
+                Finalizar Compra
+            </button>
+        </div>
+    {% else %}
+        <div class="vazio">
+            Seu carrinho está vazio.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
