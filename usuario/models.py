@@ -5,6 +5,7 @@ class Usuario(models.Model):
     tipo_usuario = models.CharField(max_length=20, choices=TIPOS, default='cliente')
     nome_completo = models.CharField(max_length=150)
     username = models.CharField(max_length=50, unique=True)
+    telefone = models.CharField(max_length=15, blank=True)
     data_nascimento = models.DateField()
     cpf = models.CharField(max_length=14, unique=True)
     foto_perfil = models.ImageField(upload_to='fotos/usuario', blank=True, null=True)

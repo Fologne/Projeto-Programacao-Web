@@ -107,7 +107,7 @@
                             <img src="{% if usuario_logado.foto_perfil %}{{ usuario_logado.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}" class="menu-icon perfil-icon">
                             <span>Meu Perfil</span>
                         </a>
-                        <a href="#" class="menu-item">
+                        <a href="{% url 'cadastroAdmin' %}" class="menu-item">
                             <img src="{% static 'imagens/admin.png' %}" class="menu-icon">
                             <span>Cadastrar Admin</span>
                         </a>

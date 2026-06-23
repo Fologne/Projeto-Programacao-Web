@@ -359,3 +359,48 @@ def buscar(request):
         "categorias": Categoria.objects.all(),
         "tipos": Tipo.objects.all()
     })
+
+def cadastroAdmin(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario_logado = get_object_or_404(Usuario, id=usuario_id)
+    if usuario_logado.tipo_usuario != "superadmin":
+        messages.error(request, "Você não possui permissão para acessar esta página.")
+        return redirect("/")
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        cpf = request.POST.get("cpf")
+        if Usuario.objects.filter(username=username).exists():
+            messages.error(request, "Nome de usuário já cadastrado.")
+            return redirect("cadastroAdmin")
+        if Usuario.objects.filter(email=email).exists():
+            messages.error(request, "E-mail já cadastrado.")
+            return redirect("cadastroAdmin")
+        if Usuario.objects.filter(cpf=cpf).exists():
+            messages.error(request, "CPF já cadastrado.")
+            return redirect("cadastroAdmin")
+        Usuario.objects.create(
+            tipo_usuario="admin",
+            nome_completo=request.POST.get("nome_completo"),
+            username=username,
+            data_nascimento=request.POST.get("data_nascimento"),
+            cpf=cpf,
+            telefone=request.POST.get("telefone"),
+            foto_perfil=request.FILES.get("foto_perfil"),
+            logradouro=request.POST.get("logradouro"),
+            bairro=request.POST.get("bairro"),
+            cep=request.POST.get("cep"),
+            cidade=request.POST.get("cidade"),
+            estado=request.POST.get("estado").upper(),
+            email=email,
+            senha=make_password(request.POST.get("senha")),
+            ativo=True
+        )
+        messages.success(request, "Administrador cadastrado com sucesso!")
+        return redirect("cadastroAdmin")
+    return render(request, "cadastroAdmin.html", {
+        "categorias": Categoria.objects.all(),
+        "tipos": Tipo.objects.all()
+    })

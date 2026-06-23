@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Administrador{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/styleCadastro.css' %}">{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="popup">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    <h2>Cadastrar Administrador</h2>
+    <form class="cadastro-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Nome Completo</label>
+        <input type="text" name="nome_completo" maxlength="150" required>
+        <label>Usuário</label>
+        <input type="text" name="username" maxlength="50" required>
+        <label>E-mail</label>
+        <input type="email" name="email" required>
+        <label>Senha</label>
+        <input type="password" name="senha" required>
+        <label>CPF</label>
+        <input type="text" name="cpf" maxlength="14" required>
+        <label>Data de Nascimento</label>
+        <input type="date" name="data_nascimento" required>
+        <label>Telefone</label>
+        <input type="text" name="telefone">
+        <label>CEP</label>
+        <input type="text" name="cep" maxlength="9" placeholder="00000-000" required>
+        <label>Logradouro</label>
+        <input type="text" name="logradouro" maxlength="150" required>
+        <label>Bairro</label>
+        <input type="text" name="bairro" maxlength="100" required>
+        <label>Cidade</label>
+        <input type="text" name="cidade" maxlength="100" required>
+        <label>Estado (UF)</label>
+        <input type="text" name="estado" maxlength="2" placeholder="MT" style="text-transform:uppercase" required>
+        <label>Foto de Perfil</label>
+        <input type="file" name="foto_perfil" accept="image/*">
+        <button type="submit">
+            Cadastrar Administrador
+        </button>
+    </form>
+</div>
+{% endblock %}

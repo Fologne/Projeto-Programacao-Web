@@ -36,6 +36,7 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('carrinho/', include('carrinho.urls')),
     path('pedidos/', include('pedidos.urls')),
-    path('buscar/', views.buscar, name='buscar')
+    path('buscar/', views.buscar, name='buscar'),
+    path('cadastro-admin/', views.cadastroAdmin, name='cadastroAdmin'),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 #esse static é para que o django consiga achar as imagens relacionadas
