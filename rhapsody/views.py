@@ -34,6 +34,13 @@ def visualizarHome(request):
     })
 
 def cadastroProdutos(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
+        return redirect("/")
     if request.method == 'POST':
         nome = request.POST.get('nome')
         slug = slugify(nome)
@@ -97,6 +104,12 @@ def produtosPorTipo(request, slug):
     })
 
 def listaProduto(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
     produtos = Produto.objects.all()
     categorias = Categoria.objects.all()
     tipos = Tipo.objects.all()
@@ -107,6 +120,12 @@ def listaProduto(request):
     })
 
 def alteraProduto(request, slug):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
     produto = get_object_or_404(Produto, slug=slug)
     if request.method == 'POST':
         produto.nome = request.POST.get('nome')
@@ -129,6 +148,12 @@ def alteraProduto(request, slug):
     })
     
 def cadastroBanner(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
     if request.method == 'POST':
         Banner.objects.create(
             titulo=request.POST.get('titulo'),
@@ -148,6 +173,12 @@ def cadastroBanner(request):
     })
     
 def listaBanner(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
     banners = Banner.objects.all().order_by('criado_em')
     return render(request,'listaBanner.html', {
         'banners': banners,
@@ -156,6 +187,12 @@ def listaBanner(request):
     })
 
 def alteraBanner(request, slug):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não tem permissão para acessar esta página.")
     banner = get_object_or_404(Banner, slug=slug)
     if request.method == 'POST':
         banner.titulo = request.POST.get('titulo')

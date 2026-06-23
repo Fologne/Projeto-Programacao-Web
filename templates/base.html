@@ -98,6 +98,10 @@
                             <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
                             <span>Listar Banners</span>
                         </a>
+                        <a href="#" class="menu-item">
+                            <img src="{% static 'imagens/pedido.png' %}" class="menu-icon">
+                            <span>Administrar Pedidos</span>
+                       </a>
                     {% elif usuario_logado.tipo_usuario == "superadmin" %}
                         <a href="{% url 'perfil' %}" class="menu-item">
                             <img src="{% if usuario_logado.foto_perfil %}{{ usuario_logado.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}" class="menu-icon perfil-icon">
@@ -127,6 +131,10 @@
                         <a href="{% url 'listaBanner' %}" class="menu-item">
                             <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
                             <span>Listar Banners</span>
+                       </a>
+                       <a href="#" class="menu-item">
+                            <img src="{% static 'imagens/pedido.png' %}" class="menu-icon">
+                            <span>Administrar Pedidos</span>
                        </a>
                     {% endif %}
                     <hr class="menu-divider">
