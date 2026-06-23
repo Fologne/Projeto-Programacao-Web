@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Configurar Usuários{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/styleUsuarios.css' %}">{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="popup">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="usuarios-container">
+    <h2>Administradores</h2>
+    {% for usuario in administradores %}
+        <div class="usuario-card">
+            <div class="usuario-info">
+                <img src="{% if usuario.foto_perfil %}{{ usuario.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}">
+                <div>
+                    <strong>{{ usuario.nome_completo }}</strong><br>
+                    {{ usuario.username }}
+                </div>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+                <input type="hidden" name="acao" value="rebaixar">
+                <button class="btn-remover">
+                    Tornar Cliente
+                </button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Nenhum administrador cadastrado.</p>
+    {% endfor %}
+    <h2>Clientes</h2>
+    {% for usuario in clientes %}
+        <div class="usuario-card">
+            <div class="usuario-info">
+                <img src="{% if usuario.foto_perfil %}{{ usuario.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}">
+                <div>
+                    <strong>{{ usuario.nome_completo }}</strong><br>
+                    {{ usuario.username }}
+                </div>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+                <input type="hidden" name="acao" value="promover">
+                <button class="btn-promover">
+                    Tornar Administrador
+                </button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Nenhum cliente encontrado.</p>
+    {% endfor %}
+</div>
+<script src="{% static 'js/cadastro.js' %}"></script>
+{% endblock %}

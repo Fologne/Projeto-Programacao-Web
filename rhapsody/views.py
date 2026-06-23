@@ -404,3 +404,30 @@ def cadastroAdmin(request):
         "categorias": Categoria.objects.all(),
         "tipos": Tipo.objects.all()
     })
+    
+def configurarUsuarios(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario_logado = get_object_or_404(Usuario, id=usuario_id)
+    if usuario_logado.tipo_usuario != "superadmin":
+        messages.error(request, "Você não possui permissão para acessar esta página.")
+        return redirect("/")
+    if request.method == "POST":
+        usuario = get_object_or_404(Usuario, id=request.POST.get("usuario_id"))
+        acao = request.POST.get("acao")
+        if acao == "promover":
+            usuario.tipo_usuario = "admin"
+        elif acao == "rebaixar":
+            usuario.tipo_usuario = "cliente"
+        usuario.save()
+        messages.success(request, "Permissão alterada com sucesso.")
+        return redirect("configurarUsuarios")
+    administradores = Usuario.objects.filter(tipo_usuario="admin").order_by("nome_completo")
+    clientes = Usuario.objects.filter(tipo_usuario="cliente").order_by("nome_completo")
+    return render(request, "configurarUsuarios.html", {
+        "administradores": administradores,
+        "clientes": clientes,
+        "categorias": Categoria.objects.all(),
+        "tipos": Tipo.objects.all()
+    })
