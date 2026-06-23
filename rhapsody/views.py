@@ -15,7 +15,7 @@ from django.utils.text import slugify
 
 def visualizarHome(request):
     banners = Banner.objects.filter(ativo=True).order_by('ordem')
-    novidades = Produto.objects.filter(esta_disponivel=True).order_by('-modificado_em')[:5]
+    novidades = Produto.objects.filter(esta_disponivel=True).order_by('-criado_em')[:5]
     mais_vendidos = Produto.objects.filter(esta_disponivel=True).order_by('-qtd_vendida')[:5]
     tipos_lista = Tipo.objects.all()
     categorias = Categoria.objects.all()
@@ -430,4 +430,28 @@ def configurarUsuarios(request):
         "clientes": clientes,
         "categorias": Categoria.objects.all(),
         "tipos": Tipo.objects.all()
+    })
+
+def administrarPedidos(request):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if usuario.tipo_usuario not in ["admin", "superadmin"]:
+        messages.error(request, "Você não possui permissão para acessar esta página.")
+        return redirect("/")
+    if request.method == "POST":
+        pedido = get_object_or_404(Pedido, id=request.POST.get("pedido_id"))
+        if pedido.status == "preparando":
+            pedido.status = "enviando"
+        elif pedido.status == "enviando":
+            pedido.status = "entregue"
+        pedido.save()
+        messages.success(request, "Status do pedido atualizado.")
+        return redirect("administrarPedidos")
+    pedidos = Pedido.objects.select_related("usuario").prefetch_related("itens__produto")
+    return render(request, "administrarPedidos.html", {
+        "pedidos": pedidos,
+        "categorias": Categoria.objects.all(),
+        "tipos": Tipo.objects.all(),
     })

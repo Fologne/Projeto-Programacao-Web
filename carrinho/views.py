@@ -79,6 +79,7 @@ def finalizarCompra(request):
     for item in carrinho.itens.all():
         ItemPedido.objects.create(pedido=pedido, produto=item.produto, quantidade=item.quantidade, preco=item.produto.preco)
         item.produto.estoque -= item.quantidade
+        item.produto.qtd_vendida += item.quantidade
         item.produto.save()
     carrinho.itens.all().delete()
     messages.success(request, "Compra realizada com sucesso!")

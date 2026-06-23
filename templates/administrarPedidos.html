@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Administrar Pedidos{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/stylePedidosAdmin.css' %}">
+{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="popup">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="pedidos-container">
+    <h2>Administrar Pedidos</h2>
+    {% for pedido in pedidos %}
+    <div class="pedido-card">
+        <div class="pedido-topo">
+            <div>
+                <strong>Pedido #{{ pedido.id }}</strong><br>
+                Cliente: {{ pedido.usuario.nome_completo }}<br>
+                {{ pedido.data|date:"d/m/Y H:i" }}
+            </div>
+            <div class="status status-{{ pedido.status }}">{{ pedido.get_status_display }}</div>
+        </div>
+        <hr>
+        <div class="itens">
+            {% for item in pedido.itempedido_set.all %}
+            <div class="item">
+                <span>{{ item.produto.nome }}</span>
+                <span>{{ item.quantidade }} x R$ {{ item.preco }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pedido-footer">
+            <strong>Total: R$ {{ pedido.total }}</strong>
+            {% if pedido.status != "entregue" %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="pedido_id" value="{{ pedido.id }}">
+                <button>
+                    {% if pedido.status == "preparando" %}
+                        Marcar como Enviando
+                    {% else %}
+                        Marcar como Entregue
+                    {% endif %}
+                </button>
+            </form>
+            {% else %}
+            <button disabled>
+                Pedido Finalizado
+            </button>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>Nenhum pedido encontrado.</p>
+    {% endfor %}
+</div>
+<script src="{% static 'js/cadastro.js' %}"></script>
+{% endblock %}
