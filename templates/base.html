@@ -38,49 +38,105 @@
     </div>
     <div class="nav-right">
         {% if usuario_logado %}
-            <a href="#" class="cart-icon">
-                <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
-            </a>
+            {% if usuario_logado.tipo_usuario == "cliente" or usuario_logado.tipo_usuario == "admin" %}
+                <a href="{% url 'carrinho' %}" class="cart-icon">
+                    <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
+                </a>
+            {% endif %}
             <div class="user-dropdown">
                 <a href="{% url 'perfil' %}">
                     <img
                         src="{% if usuario_logado.foto_perfil %}
-                            {{ usuario_logado.foto_perfil.url }}
-                            {% else %}
+                        {{ usuario_logado.foto_perfil.url }}
+                        {% else %}
                             {% static 'imagens/icone.png' %}
-                     {% endif %}"
-                    class="profile-img"
-                    alt="Perfil"
-                    >
+                        {% endif %}"
+                        class="profile-img"
+                        alt="Perfil">
                 </a>
                 <div class="user-menu">
-                    <a href="{% url 'perfil' %}" class="menu-item">
-                        <img
-                            src="{% if usuario_logado.foto_perfil %}
-                            {{ usuario_logado.foto_perfil.url }}
-                            {% else %}
-                            {% static 'imagens/icone.png' %}
-                            {% endif %}"
-                            class="menu-icon perfil-icon"
-                            alt="Perfil"
-                        >
-                        <span>Meu Perfil</span>
-                    </a>
-                    <a href="{% url 'pedidos' %}" class="menu-item">
-                        <img src="{% static 'imagens/pedido.png' %}" class="menu-icon" alt="Pedidos">
-                        <span>Meus Pedidos</span>
-                    </a>
-                    <a href="{% url 'carrinho' %}" class="menu-item">
-                        <img src="{% static 'imagens/carrinho.png' %}" class="menu-icon" alt="Carrinho">
-                        <span>Meu Carrinho</span>
-                    </a>
+                    {% if usuario_logado.tipo_usuario == "cliente" %}
+                        <a href="{% url 'perfil' %}" class="menu-item">
+                            <img src="{% if usuario_logado.foto_perfil %}{{ usuario_logado.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}" class="menu-icon perfil-icon">
+                            <span>Meu Perfil</span>
+                        </a>
+                        <a href="{% url 'pedidos' %}" class="menu-item">
+                            <img src="{% static 'imagens/pedido.png' %}" class="menu-icon">
+                            <span>Meus Pedidos</span>
+                        </a>
+                        <a href="{% url 'carrinho' %}" class="menu-item">
+                            <img src="{% static 'imagens/carrinho.png' %}" class="menu-icon">
+                            <span>Meu Carrinho</span>
+                        </a>
+                    {% elif usuario_logado.tipo_usuario == "admin" %}
+                        <a href="{% url 'perfil' %}" class="menu-item">
+                            <img src="{% if usuario_logado.foto_perfil %}{{ usuario_logado.foto_perfil.url }}{% else %}{%   static 'imagens/icone.png' %}{% endif %}" class="menu-icon perfil-icon">
+                            <span>Meu Perfil</span>
+                        </a>
+                        <a href="{% url 'pedidos' %}" class="menu-item">
+                            <img src="{% static 'imagens/pedido.png' %}" class="menu-icon">
+                            <span>Meus Pedidos</span>
+                        </a>
+                        <a href="{% url 'carrinho' %}" class="menu-item">
+                            <img src="{% static 'imagens/carrinho.png' %}" class="menu-icon">
+                            <span>Meu Carrinho</span>
+                        </a>
+                        <hr class="menu-divider">
+                        <a href="{% url 'cadastroProdutos' %}" class="menu-item">
+                            <img src="{% static 'imagens/produto.png' %}" class="menu-icon">
+                            <span>Cadastrar Produto</span>
+                        </a>
+                        <a href="{% url 'cadastroBanner' %}" class="menu-item">
+                            <img src="{% static 'imagens/banner.png' %}" class="menu-icon">
+                            <span>Cadastrar Banner</span>
+                        </a>
+                        <a href="{% url 'listaProduto' %}" class="menu-item">
+                            <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
+                            <span>Listar Produtos</span>
+                        </a>
+                        <a href="{% url 'listaBanner' %}" class="menu-item">
+                            <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
+                            <span>Listar Banners</span>
+                        </a>
+                    {% elif usuario_logado.tipo_usuario == "superadmin" %}
+                        <a href="{% url 'perfil' %}" class="menu-item">
+                            <img src="{% if usuario_logado.foto_perfil %}{{ usuario_logado.foto_perfil.url }}{% else %}{% static 'imagens/icone.png' %}{% endif %}" class="menu-icon perfil-icon">
+                            <span>Meu Perfil</span>
+                        </a>
+                        <a href="#" class="menu-item">
+                            <img src="{% static 'imagens/admin.png' %}" class="menu-icon">
+                            <span>Cadastrar Admin</span>
+                        </a>
+                        <a href="#" class="menu-item">
+                            <img src="{% static 'imagens/usuarios.png' %}" class="menu-icon">
+                            <span>Configurar Usuários</span>
+                        </a>
+                        <hr class="menu-divider">
+                        <a href="{% url 'cadastroProdutos' %}" class="menu-item">
+                            <img src="{% static 'imagens/produto.png' %}" class="menu-icon">
+                            <span>Cadastrar Produto</span>
+                        </a>
+                        <a href="{% url 'cadastroBanner' %}" class="menu-item">
+                            <img src="{% static 'imagens/banner.png' %}" class="menu-icon">
+                            <span>Cadastrar Banner</span>
+                        </a>
+                        <a href="{% url 'listaProduto' %}" class="menu-item">
+                            <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
+                            <span>Listar Produtos</span>
+                        </a>
+                        <a href="{% url 'listaBanner' %}" class="menu-item">
+                            <img src="{% static 'imagens/lista.png' %}" class="menu-icon">
+                            <span>Listar Banners</span>
+                       </a>
+                    {% endif %}
+                    <hr class="menu-divider">
                     <a href="{% url 'logout' %}" class="menu-item">
-                        <img src="{% static 'imagens/logout.png' %}" class="menu-icon" alt="Logout">
+                        <img src="{% static 'imagens/logout.png' %}" class="menu-icon">
                         <span>Sair</span>
                     </a>
                 </div>
             </div>
-            {% else %}
+        {% else %}
             <a href="{% url 'login' %}?next={{ request.path }}" class="auth-icon">
                 <img src="{% static 'imagens/login.webp' %}" alt="Login">
             </a>
@@ -88,7 +144,7 @@
                 <img src="{% static 'imagens/signup.webp' %}" alt="Cadastro">
             </a>
         {% endif %}
-</div>
+    </div>
 </div>
 <div class="main-content">
     {% block content %}

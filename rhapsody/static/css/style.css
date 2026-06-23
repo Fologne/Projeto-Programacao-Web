@@ -295,3 +295,22 @@ body {
     margin-top:5px;
     padding-top:12px;
 }
+
+.menu-divider{
+    border:none;
+    border-top:1px solid rgba(255,255,255,.2);
+    margin:5px 0;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.menu-icon{
+    width:22px;
+    height:22px;
+    object-fit:contain;
+    flex-shrink:0;
+}

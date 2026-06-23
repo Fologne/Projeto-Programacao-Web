@@ -11,6 +11,9 @@ def adicionarCarrinho(request, produto_id):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
         return redirect(f'/login/?next={request.path}')
+    usuario = Usuario.objects.get(id=usuario_id)
+    if usuario.tipo_usuario == "superadmin":
+        return redirect('/')
     produto = get_object_or_404(Produto, id=produto_id)
     usuario = get_object_or_404(Usuario, id=usuario_id)
     quantidade = int(request.POST.get('quantidade', 1))
@@ -28,6 +31,8 @@ def carrinho(request):
     if not usuario_id:
         return redirect('login')
     usuario = Usuario.objects.get(id=usuario_id)
+    if usuario.tipo_usuario == "superadmin":
+        return redirect('/')
     carrinho, criado = Carrinho.objects.get_or_create(usuario=usuario)
     total = sum(item.produto.preco * item.quantidade for item in carrinho.itens.all())
     return render (request, 'carrinho.html', {

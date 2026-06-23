@@ -13,7 +13,7 @@
 {% endif %}
 <div class="container">
     <h2>Cadastrar Produto</h2>
-    <form id="produtoForm" method="POST" enctype="multipart/form-data">
+    <form class ="cadastro-form" id="produtoForm" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label>Nome</label>
         <input type="text" name="nome" maxlength="80" required>

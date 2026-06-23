@@ -320,5 +320,5 @@ def buscar(request):
         "estoque": estoque,
         "ordenar": ordenar,
         "categorias": Categoria.objects.all(),
-        "tipos": Tipo.objects.all(),
+        "tipos": Tipo.objects.all()
     })

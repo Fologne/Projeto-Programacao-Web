@@ -45,11 +45,11 @@
 </form>
 </div>
 <div class="perfil-acoes">
-<a href="#" class="acao-card">
+<a href="{% url 'carrinho' %}" class="acao-card">
     <img src="{% static 'imagens/carrinho.png' %}" alt="Carrinho">
     <h3>Meu Carrinho</h3>
 </a>
-<a href="#" class="acao-card">
+<a href="{% url 'pedidos' %}" class="acao-card">
     <img
         src="{% static 'imagens/pedido.png' %}"
         alt="Pedidos"
