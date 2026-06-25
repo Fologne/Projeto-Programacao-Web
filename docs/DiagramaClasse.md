@@ -2,7 +2,39 @@
 classDiagram
 
 %% =======================
-%% Entidades principais
+%% Usuários
+%% =======================
+
+class Usuario {
+    +int id
+    +string nome
+    +string cpf
+    +date dataNascimento
+    +string telefone
+    +string email
+    +string senha
+}
+
+class Cliente
+
+class Administrador {
+    +gerenciarProdutos()
+    +gerenciarCategorias()
+    +gerenciarTipos()
+    +gerenciarBanners()
+}
+
+class SuperAdministrador {
+    +gerenciarUsuarios()
+    +cadastrarAdministrador()
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Administrador
+Administrador <|-- SuperAdministrador
+
+%% =======================
+%% Catálogo
 %% =======================
 
 class Produto {
@@ -21,42 +53,80 @@ class Produto {
 class Categoria {
     +string nome
     +string descricao
-    +string image
+    +string imagem
     +string slug
 }
 
 class Tipo {
     +string nome
     +string descricao
-    +string image
+    +string imagem
     +string slug
 }
-
-%% =======================
-%% Outras classes do sistema
-%% =======================
-
-class Administrador {
-    +int id
-    +string nome
-    +string senha
-}
-
-class Usuario {
-    +int id
-    +string nome
-    +string cpf
-    +date dataNascimento
-    +string telefone
-}
-
-%% =======================
-%% Relacionamentos
-%% =======================
 
 Produto --> "1" Categoria : pertence
 Produto --> "0..1" Tipo : possui
 
+%% =======================
+%% Banner
+%% =======================
+
+class Banner {
+    +string titulo
+    +string imagem
+    +bool ativo
+}
+
+Banner --> "0..1" Produto : direciona
+Banner --> "0..1" Categoria : direciona
+Banner --> "0..1" Tipo : direciona
+
+%% =======================
+%% Carrinho
+%% =======================
+
+class Carrinho {
+    +datetime criado_em
+}
+
+class ItemCarrinho {
+    +int quantidade
+    +decimal preco_unitario
+}
+
+Cliente --> "1" Carrinho : possui
+Carrinho --> "*" ItemCarrinho : contém
+ItemCarrinho --> "1" Produto : referencia
+
+%% =======================
+%% Pedidos
+%% =======================
+
+class Pedido {
+    +int id
+    +datetime data
+    +decimal valor_total
+    +string status
+}
+
+class ItemPedido {
+    +int quantidade
+    +decimal preco_unitario
+}
+
+Cliente --> "*" Pedido : realiza
+Pedido --> "*" ItemPedido : contém
+ItemPedido --> "1" Produto : referencia
+
+%% =======================
+%% Administração
+%% =======================
+
 Administrador --> Produto : gerencia
-Usuario --> Produto : visualiza
+Administrador --> Categoria : gerencia
+Administrador --> Tipo : gerencia
+Administrador --> Banner : gerencia
 ```
+
+SuperAdministrador --> Usuario : gerencia
+SuperAdministrador --> Administrador : cadastra
