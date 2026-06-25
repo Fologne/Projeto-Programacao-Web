@@ -323,31 +323,31 @@ def buscar(request):
     ordenar = request.GET.get("ordenar", "az")
     produtos = Produto.objects.all()
     if termo:
-        produtos = produtos.filter(Q(nome__icontains=termo) | Q(descricao__icontains=termo))
+        produtos = produtos.filter(Q(nome__icontains=termo) | Q(descricao__icontains=termo)).filter(esta_disponivel=True)
     if categoria:
-        produtos = produtos.filter(categoria__id=categoria)
+        produtos = produtos.filter(categoria__id=categoria).filter(esta_disponivel=True)
     if tipo:
-        produtos = produtos.filter(tipo__id=tipo)
+        produtos = produtos.filter(tipo__id=tipo).filter(esta_disponivel=True)
     if faixa == "100":
-        produtos = produtos.filter(preco__lte=100)
+        produtos = produtos.filter(preco__lte=100).filter(esta_disponivel=True)
     elif faixa == "200":
-        produtos = produtos.filter(preco__gte=101, preco__lte=200)
+        produtos = produtos.filter(preco__gte=101, preco__lte=200).filter(esta_disponivel=True)
     elif faixa == "500":
-        produtos = produtos.filter(preco__gte=201, preco__lte=500)
+        produtos = produtos.filter(preco__gte=201, preco__lte=500).filter(esta_disponivel=True)
     elif faixa == "501":
-        produtos = produtos.filter(preco__gte=501)
+        produtos = produtos.filter(preco__gte=501).filter(esta_disponivel=True)
     if estoque:
-        produtos = produtos.filter(estoque__gt=0)
+        produtos = produtos.filter(estoque__gt=0).filter(esta_disponivel=True)
     if ordenar == "az":
-        produtos = produtos.order_by("nome")
+        produtos = produtos.order_by("nome").filter(esta_disponivel=True)
     elif ordenar == "za":
-        produtos = produtos.order_by("-nome")
+        produtos = produtos.order_by("-nome").filter(esta_disponivel=True)
     elif ordenar == "menor":
-        produtos = produtos.order_by("preco")
+        produtos = produtos.order_by("preco").filter(esta_disponivel=True)
     elif ordenar == "maior":
-        produtos = produtos.order_by("-preco")
+        produtos = produtos.order_by("-preco").filter(esta_disponivel=True)
     elif ordenar == "recentes":
-        produtos = produtos.order_by("-id")
+        produtos = produtos.order_by("-id").filter(esta_disponivel=True)
     return render(request, "busca.html", {
         "produtos": produtos,
         "termo": termo,
